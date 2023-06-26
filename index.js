@@ -26,7 +26,8 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         const serviceCollection = client.db('reflexliaReview').collection('services');
-
+        const reviewCollection = client.db('reflexliaReview').collection('reviews');
+        
         app.get('/services', async (req, res) => {
             const dataSize = req.query.datasize;
             const query = {};
