@@ -62,6 +62,15 @@ async function run() {
             res.send(reviews);
 
         })
+        app.get('/user-reviews/:userID', async (req, res) => {
+            // console.log(req.query.serviceID);
+            const userID = req.params.userID;
+            let query = {'reviewer_info.userID': userID};
+            const cursor = reviewCollection.find(query).sort({ review_date: -1 });
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+
+        })
 
         app.post('/reviews', async (req, res) =>{
             const review = req.body;
