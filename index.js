@@ -27,7 +27,7 @@ async function run() {
     try {
         const serviceCollection = client.db('reflexliaReview').collection('services');
         const reviewCollection = client.db('reflexliaReview').collection('reviews');
-        
+
         app.get('/services', async (req, res) => {
             const dataSize = req.query.datasize;
             const query = {};
@@ -47,6 +47,20 @@ async function run() {
             const query = { _id: new ObjectId(id) };
             const service = await serviceCollection.findOne(query);
             res.send(service);
+        })
+
+        app.get('/service-reviews', async (req, res) => {
+            // console.log(req.query.serviceID);
+            let query = {};
+            if(req.query.serviceID){
+                query={
+                    service_id : req.query.serviceID
+                }
+            }
+            const cursor = reviewCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+
         })
 
         app.post('/reviews', async (req, res) =>{
