@@ -41,13 +41,15 @@ async function run() {
             const result = await serviceCollection.insertOne(service);
             res.send(result);
         })
-        
+
         app.get('/service/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
             const service = await serviceCollection.findOne(query);
             res.send(service);
         })
+
+
 
         app.get('/service-reviews', async (req, res) => {
             // console.log(req.query.serviceID);
@@ -62,6 +64,7 @@ async function run() {
             res.send(reviews);
 
         })
+
         app.get('/user-reviews/:userID', async (req, res) => {
             // console.log(req.query.serviceID);
             const userID = req.params.userID;
@@ -69,7 +72,9 @@ async function run() {
             const cursor = reviewCollection.find(query).sort({ review_date: -1 });
             const reviews = await cursor.toArray();
             res.send(reviews);
+
         })
+
         app.patch('/reviews/:id', async (req, res) => {
             const id = req.params.id;
             const updateReviewData = req.body;
