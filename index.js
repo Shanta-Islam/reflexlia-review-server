@@ -88,9 +88,15 @@ async function run() {
 
         })
 
+        
+
         app.get('/user-reviews/:userID', verifyJWT, async (req, res) => {
             // console.log(req.query.serviceID);
             const userID = req.params.userID;
+            const decoded = req.decoded;
+            if (decoded.uid !== userID) {
+                res.status(403).send({ message: 'unauthorized access' });
+            }
             let query = {'reviewer_info.userID': userID};
             const cursor = reviewCollection.find(query).sort({ review_date: -1 });
             const reviews = await cursor.toArray();
@@ -133,7 +139,7 @@ run().catch(err => console.error(err));
 
 
 app.get('/', (req, res) => {
-    res.send('reflexlia service review website');
+    res.send('Welcome, reflexlia service review website');
 })
 
 
