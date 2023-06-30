@@ -102,7 +102,7 @@ async function run() {
             const id = req.params.id;
             const updateReviewData = req.body;
             const query = { _id: new ObjectId(id) };
-            const updatedReview = {
+            const updatedReview = { 
                 $set: updateReviewData
 
             }
