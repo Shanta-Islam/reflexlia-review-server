@@ -82,13 +82,13 @@ async function run() {
                     service_id : req.query.serviceID
                 }
             }
-            const cursor = reviewCollection.find(query);
+            const cursor = reviewCollection.find(query).sort({ review_date: -1 });
             const reviews = await cursor.toArray();
             res.send(reviews);
 
         })
 
-        
+
 
         app.get('/user-reviews/:userID', verifyJWT, async (req, res) => {
             // console.log(req.query.serviceID);
